@@ -5,13 +5,13 @@ import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
-  const router = useRouter(); // Tambahan untuk fungsi tombol kembali
+  const router = useRouter();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#071E16]/95 backdrop-blur-md border-b border-emerald-800/40 shadow-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#115e4f]/95 backdrop-blur-md border-b border-emerald-400/40 shadow-xl">
       
-      {/* RUNNING TEXT */}
-      <div className="bg-amber-400 text-emerald-950 font-extrabold text-[11px] sm:text-xs py-1.5 overflow-hidden whitespace-nowrap shadow-inner">
+      {/* RUNNING TEXT (Warna disesuaikan agar menyatu dengan hijau) */}
+      <div className="bg-[#0d4738] text-amber-400 font-extrabold text-[11px] sm:text-xs py-1.5 overflow-hidden whitespace-nowrap shadow-inner border-b border-emerald-600/50">
         <div className="inline-block animate-marquee uppercase tracking-wider">
           ✨ Selamat Datang di Website Resmi Direktorat Pendidikan Al-Irsyad Al-Islamiyyah Kota Pekalongan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
           🚀 Pendaftaran Peserta Didik Baru (PPDB) Telah Dibuka! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -37,14 +37,14 @@ export default function Header() {
             <div className="hidden sm:flex items-center gap-2">
               <button 
                 onClick={() => router.back()} 
-                className="flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-white bg-emerald-900/40 hover:bg-emerald-800/60 px-3 py-1.5 rounded-full border border-emerald-700/50 transition-all duration-300 shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-white bg-[#0d4738] hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500/50 transition-all duration-300 shadow-sm cursor-pointer"
               >
                 <span className="text-sm leading-none -mt-0.5">←</span> Kembali
               </button>
               
               <Link 
                 href="/" 
-                className="flex items-center gap-1.5 text-xs font-bold text-emerald-300 hover:text-white bg-emerald-900/40 hover:bg-emerald-800/60 px-3 py-1.5 rounded-full border border-emerald-700/50 transition-all duration-300 shadow-sm"
+                className="flex items-center gap-1.5 text-xs font-bold text-emerald-100 hover:text-white bg-[#0d4738] hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500/50 transition-all duration-300 shadow-sm"
               >
                 <span className="text-sm leading-none -mt-0.5">🏠</span> Home
               </Link>
@@ -53,7 +53,7 @@ export default function Header() {
         </div>
 
         {/* MENU NAVIGASI KANAN */}
-        <div className="hidden lg:flex items-center gap-5 text-xs font-bold text-emerald-200 h-full">
+        <div className="hidden lg:flex items-center gap-5 text-xs font-bold text-emerald-100 h-full">
           <Link href="/" className="hover:text-amber-400 transition">Beranda</Link>
           
           {/* DROPDOWN UNIT PENDIDIKAN */}
@@ -61,11 +61,11 @@ export default function Header() {
             <button className="hover:text-amber-400 transition flex items-center gap-1 h-full">
               Unit Pendidikan <span className="text-[9px] mt-0.5">▼</span>
             </button>
-            <div className="absolute top-full left-0 w-48 bg-[#041a12] border border-emerald-800/50 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden">
-              <Link href="/paud" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">PAUD (KB & TK)</Link>
-              <Link href="/sd" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">SD Al-Irsyad</Link>
-              <Link href="/smp" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">SMP Al-Irsyad</Link>
-              <Link href="/sma" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">SMA Al-Irsyad</Link>
+            <div className="absolute top-full left-0 w-48 bg-[#115e4f] border border-emerald-400/50 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden">
+              <Link href="/paud" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">PAUD (KB & TK)</Link>
+              <Link href="/sd" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">SD Al-Irsyad</Link>
+              <Link href="/smp" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">SMP Al-Irsyad</Link>
+              <Link href="/sma" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">SMA Al-Irsyad</Link>
             </div>
           </div>
           
@@ -74,21 +74,21 @@ export default function Header() {
             <button className="hover:text-amber-400 transition flex items-center gap-1 h-full">
               Formulir PPDB <span className="text-[9px] mt-0.5">▼</span>
             </button>
-            <div className="absolute top-full left-0 w-52 bg-[#041a12] border border-emerald-800/50 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden">
-              <Link href="/pendaftaran/paud" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">Daftar PAUD (KB & TK)</Link>
-              <Link href="/pendaftaran/sd" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">Daftar SD Al-Irsyad</Link>
-              <Link href="/pendaftaran/smp" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">Daftar SMP Al-Irsyad</Link>
-              <Link href="/pendaftaran/sma" className="px-4 py-3 hover:bg-emerald-900/50 hover:text-amber-400 transition">Daftar SMA Al-Irsyad</Link>
+            <div className="absolute top-full left-0 w-52 bg-[#115e4f] border border-emerald-400/50 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden">
+              <Link href="/pendaftaran/paud" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar PAUD (KB & TK)</Link>
+              <Link href="/pendaftaran/sd" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar SD Al-Irsyad</Link>
+              <Link href="/pendaftaran/smp" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar SMP Al-Irsyad</Link>
+              <Link href="/pendaftaran/sma" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar SMA Al-Irsyad</Link>
             </div>
           </div>
           
-          {/* LINK KARIR & QNA SUDAH AKTIF */}
+          {/* LINK KARIR & QNA */}
           <Link href="/#karir" className="hover:text-amber-400 transition flex items-center gap-1">
-            <span className="text-emerald-400">💼</span> Karir
+            <span className="text-emerald-300">💼</span> Karir
           </Link>
           
           <Link href="/#qna" className="hover:text-amber-400 transition flex items-center gap-1">
-            <span className="text-emerald-400">❔</span> QNA
+            <span className="text-emerald-300">❔</span> QNA
           </Link>
 
         </div>

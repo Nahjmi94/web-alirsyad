@@ -25,20 +25,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className="scroll-smooth">
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-[#071E16] text-slate-100 antialiased flex flex-col min-h-screen`}>
-        
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-[#115e4f] text-slate-50 antialiased flex flex-col min-h-screen`}>
         {/* NAVBAR UTAMA */}
         <Header />
 
-        {/* 
-          KONTEN UTAMA:
-          pt-[130px] memastikan semua halaman aman dari tumpang-tindih navbar. 
-          animate-fade-in-up bikin transisi pindah halaman jadi lebih *smooth*.
-        */}
-        <main className="flex-1 pt-[130px] animate-fade-in-up">
+        {/* KONTEN UTAMA */}
+        <main className="flex-1 pt-[110px] md:pt-[130px] animate-fade-in-up bg-transparent">
           {children}
         </main>
-
       </body>
     </html>
   );
