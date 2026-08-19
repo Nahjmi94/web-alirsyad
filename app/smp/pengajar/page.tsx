@@ -1,24 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-function RevealOnScroll({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } }, { threshold: 0.1 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  return <div ref={ref} style={{ transitionDelay: `${delay}ms` }} className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>{children}</div>;
-}
-
 function MuslimAvatar() {
   return (
-    <div className="w-full h-full bg-emerald-900/60 flex items-center justify-center relative overflow-hidden">
-      <svg viewBox="0 0 100 100" className="w-20 h-20 text-emerald-300/80 mt-3" fill="currentColor">
+    <div className="w-full h-full bg-[#0d4738] flex items-center justify-center relative overflow-hidden">
+      <svg viewBox="0 0 100 100" className="w-28 h-28 text-emerald-300/80 mt-3" fill="currentColor">
         <path d="M20 90 C20 70, 35 60, 50 60 C65 60, 80 70, 80 90 Z" />
         <circle cx="50" cy="45" r="16" fill="#fef3c7" />
         <path d="M34 40 C34 30, 66 30, 66 40 L66 42 L34 42 Z" fill="#064e3b" />
@@ -29,8 +17,8 @@ function MuslimAvatar() {
 
 function MuslimahAvatar() {
   return (
-    <div className="w-full h-full bg-emerald-900/60 flex items-center justify-center relative overflow-hidden">
-      <svg viewBox="0 0 100 100" className="w-20 h-20 text-emerald-300/80 mt-3" fill="currentColor">
+    <div className="w-full h-full bg-[#0d4738] flex items-center justify-center relative overflow-hidden">
+      <svg viewBox="0 0 100 100" className="w-28 h-28 text-emerald-300/80 mt-3" fill="currentColor">
         <path d="M20 90 C20 70, 35 60, 50 60 C65 60, 80 70, 80 90 Z" />
         <path d="M50 15 C30 15, 20 30, 20 55 C20 75, 35 85, 50 85 C65 85, 80 75, 80 55 C80 30, 70 15, 50 15 Z" fill="#064e3b" stroke="#34d399" strokeWidth="3" />
         <circle cx="50" cy="48" r="16" fill="#fef3c7" />
@@ -40,49 +28,82 @@ function MuslimahAvatar() {
 }
 
 export default function PengajarSmpPage() {
-  // Simulasi daftar 12 pengajar SMP
-  const daftarPengajar = [
-    { nama: "Ustadz Fauzan, M.Pd", peran: "Kepala Sekolah", gender: "M" },
-    { nama: "Ustazah Rahma, M.Sc", peran: "Guru IPA Terpadu", gender: "F" },
-    { nama: "Ustadz Tariq, S.Pd", peran: "Guru Matematika", gender: "M" },
-    { nama: "Ustazah Laila, S.Pd", peran: "Guru Bahasa Inggris", gender: "F" },
-    { nama: "Ustadz Ridwan, Lc", peran: "Guru Bahasa Arab", gender: "M" },
-    { nama: "Ustazah Dinda, S.Pd", peran: "Guru IPS", gender: "F" },
-    { nama: "Ustadz Arif, S.Kom", peran: "Guru TIK & Robotik", gender: "M" },
-    { nama: "Ustazah Salma, S.Pd", peran: "Wali Kelas 7", gender: "F" },
-    { nama: "Ustadz Ilham, S.Ag", peran: "Guru PAI", gender: "M" },
-    { nama: "Ustazah Husna, M.Pd", peran: "Guru Bahasa Indonesia", gender: "F" },
-    { nama: "Ustadz Riza, S.Pd", peran: "Guru Penjasorkes", gender: "M" },
-    { nama: "Ustazah Yasmin, S.Pd", peran: "Pembina OSIS", gender: "F" },
+  const dataGuru = [
+    { nama: "Ustadz Fauzan, M.Pd", peran: "Kepala Sekolah SMP", gender: "M" },
+    { nama: "Ustazah Rahma, M.Sc", peran: "Wakasek Kurikulum & Sains", gender: "F" },
+    { nama: "Ustadz Ilham, S.Ag", peran: "Guru PAI & Pembina Tahfidz Mutqin", gender: "M" },
+    { nama: "Ustadz Faisal, S.Kom", peran: "Guru IT, Coding & Robotik", gender: "M" },
+    { nama: "Ustazah Diana, M.Pd", peran: "Guru Bahasa Inggris Bilingual", gender: "F" },
+    { nama: "Ustadz Yahya, Lc", peran: "Guru Bahasa Arab & Dirasah Islamiyah", gender: "M" },
+    { nama: "Ustadz Aditya, M.Pd", peran: "Guru Matematika & Pembina OSN", gender: "M" },
+    { nama: "Ustazah Fitria, S.Pd", peran: "Guru IPA Terpadu (Fisika)", gender: "F" },
+    { nama: "Ustadz Hendra, S.Pd", peran: "Guru IPA Terpadu (Biologi)", gender: "M" },
+    { nama: "Ustazah Mega, S.Pd", peran: "Guru Bahasa Indonesia & Jurnalistik", gender: "F" },
+    { nama: "Ustadz Ridho, S.Pd", peran: "Guru IPS Terpadu & Geografi", gender: "M" },
+    { nama: "Ustazah Nur, S.Pd", peran: "Guru PPKn & Pendidikan Karakter", gender: "F" },
+    { nama: "Ustadz Farhan, S.Pd.Jas", peran: "Guru PJOK & Pelatih Bela Diri", gender: "M" },
+    { nama: "Ustazah Erika, S.Pd", peran: "Guru Seni Budaya & Prakarya", gender: "F" },
+    { nama: "Ustadz Zaki, S.Psi", peran: "Guru Bimbingan Konseling & Karir Remaja", gender: "M" },
+    { nama: "Ustazah Amalia, S.Pd.I", peran: "Guru Fiqih Ibadah & Ushul Fiqih", gender: "F" },
+    { nama: "Ustadz Shodiq, S.Pd.I", peran: "Guru Akidah Akhlak & Hadits", gender: "M" },
+    { nama: "Ustazah Intan, S.Pd", peran: "Wali Kelas 7A (Bilingual Class)", gender: "F" },
+    { nama: "Ustadz Teguh, S.Pd", peran: "Wali Kelas 7B (Tahfidz Class)", gender: "M" },
+    { nama: "Ustazah Cindy, S.Pd", peran: "Wali Kelas 8A (Science Olympiad)", gender: "F" },
+    { nama: "Ustadz Bagas, S.Pd", peran: "Wali Kelas 8B (IT & Leadership)", gender: "M" },
+    { nama: "Ustazah Maya, M.Pd", peran: "Wali Kelas 9A (Persiapan SMA Unggulan)", gender: "F" },
+    { nama: "Ustadz Danang, S.Pd", peran: "Wali Kelas 9B (Sukses Asesmen)", gender: "M" },
+    { nama: "Ustazah Latifah, Lc", peran: "Guru Percakapan Bahasa Arab (Muhadatsah)", gender: "F" },
+    { nama: "Ustadz Kevin, S.Hum", peran: "Guru Public Speaking (English Debate)", gender: "M" },
+    { nama: "Ustazah Sarah, S.Kom", peran: "Guru Desain Grafis & Multimedia", gender: "F" },
+    { nama: "Ustadz Yusuf, S.Pd.I", peran: "Pembina OSIS & LDKS SMP", gender: "M" },
+    { nama: "Ustazah Melani, S.Pd", peran: "Pembina Ekstrakurikuler PMR", gender: "F" },
+    { nama: "Ustadz Anwar, S.Pd", peran: "Pembina Pramuka Dewan Penggalang", gender: "M" },
+    { nama: "Ustazah Bella, S.Pd", peran: "Koordinator Program Karakter & Muhadharah", gender: "F" }
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#071E16] text-slate-100 pb-20 font-sans">
-      <section className="relative pt-12 pb-10 px-6 text-center border-b border-emerald-900/50">
-        <RevealOnScroll>
-          <Link href="/smp" className="inline-flex items-center gap-2 text-amber-400 hover:text-white mb-6 text-xs font-bold transition-colors bg-emerald-900/30 px-4 py-2 rounded-full border border-emerald-800/50">
-            <ArrowLeft className="w-4 h-4" /> Kembali ke Halaman Utama SMP
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-100 pb-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 py-10 w-full space-y-10">
+        
+        {/* Tombol Kembali */}
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/smp" 
+            className="inline-flex items-center gap-2 text-base sm:text-lg font-black text-amber-400 hover:text-amber-300 transition group bg-[#0d4738] px-6 py-3 rounded-2xl border-2 border-emerald-500/50 shadow-md"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition" /> 
+            Kembali ke Profil SMP
           </Link>
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-4 drop-shadow-md">Tenaga Pendidik SMP Al-Irsyad</h1>
-          <p className="text-emerald-100/70 max-w-2xl mx-auto text-sm sm:text-base font-light">Deretan guru-guru profesional dan inspiratif yang siap mencetak generasi pemimpin peradaban di SMP Al-Irsyad Pekalongan.</p>
-        </RevealOnScroll>
-      </section>
+        </div>
 
-      <section className="max-w-7xl mx-auto px-6 py-12 w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {daftarPengajar.map((guru, i) => (
-            <RevealOnScroll key={i} delay={(i % 4) * 100}>
-               <div className="bg-[#052e20]/40 border border-emerald-800/40 p-6 rounded-3xl hover:-translate-y-2 hover:border-amber-400/50 hover:shadow-[0_10px_30px_-10px_rgba(251,191,36,0.2)] transition-all duration-500 text-center group h-full flex flex-col justify-center">
-                  <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-emerald-600/50 group-hover:border-amber-400 transition-colors mb-4 shadow-lg">
-                    {guru.gender === 'M' ? <MuslimAvatar /> : <MuslimahAvatar />}
-                  </div>
-                  <h3 className="font-bold text-amber-400 mb-1">{guru.nama}</h3>
-                  <p className="text-sm text-emerald-100/80 font-light">{guru.peran}</p>
-               </div>
-            </RevealOnScroll>
+        {/* Header Halaman */}
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight flex items-center justify-center gap-3">
+            <span className="text-amber-400 text-5xl">👩‍🏫</span> Dewan Tenaga Pendidik SMP (30 Guru)
+          </h1>
+          <p className="text-emerald-50 text-xl sm:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
+            Membimbing santri menjadi generasi berprestasi, berwawasan global, dan berkarakter pemimpin.
+          </p>
+        </div>
+
+        {/* Grid 30 Kartu Pengajar */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {dataGuru.map((guru, i) => (
+            <div key={i} className="bg-[#071E16]/90 border-2 border-emerald-500/50 hover:border-amber-400 p-8 rounded-3xl text-center group hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(251,191,36,0.3)] transition-all duration-500 shadow-xl flex flex-col items-center">
+              <div className="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-emerald-400/60 mb-6 shadow-xl group-hover:border-amber-400 group-hover:scale-105 transition-all">
+                {guru.gender === 'M' ? <MuslimAvatar /> : <MuslimahAvatar />}
+              </div>
+              <h2 className="font-black text-amber-400 text-2xl sm:text-3xl mb-3 group-hover:text-amber-300 leading-snug">
+                {guru.nama}
+              </h2>
+              <p className="text-lg sm:text-xl text-emerald-100 font-semibold leading-relaxed">
+                {guru.peran}
+              </p>
+            </div>
           ))}
         </div>
-      </section>
+
+      </div>
     </div>
   );
 }

@@ -1,89 +1,97 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
-// ==========================================
-// KODE ANIMASI SCROLL
-// ==========================================
-function RevealOnScroll({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target); 
-        }
-      },
-      { threshold: 0.1 } 
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
+function MuslimahAvatar() {
   return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
-      }`}
-    >
-      {children}
+    <div className="w-full h-full bg-[#0d4738] flex items-center justify-center relative overflow-hidden">
+      <svg viewBox="0 0 100 100" className="w-28 h-28 text-emerald-300/80 mt-3" fill="currentColor">
+        <path d="M20 90 C20 70, 35 60, 50 60 C65 60, 80 70, 80 90 Z" />
+        <path d="M50 15 C30 15, 20 30, 20 55 C20 75, 35 85, 50 85 C65 85, 80 75, 80 55 C80 30, 70 15, 50 15 Z" fill="#064e3b" stroke="#34d399" strokeWidth="3" />
+        <circle cx="50" cy="48" r="16" fill="#fef3c7" />
+      </svg>
     </div>
   );
 }
 
 export default function PengajarPaudPage() {
-  // Generate 30 Data Guru Palsu
-  const daftarGuru = Array.from({ length: 30 }).map((_, i) => ({
-    id: i + 1,
-    nama: `Ustazah Pengajar ${i + 1}, S.Pd`,
-    peran: i % 3 === 0 ? "Wali Kelas" : i % 3 === 1 ? "Guru Pendamping" : "Guru Tahfidz",
-    foto: `https://placehold.co/400x400/052e20/fbbf24?text=Guru+${i + 1}`
-  }));
+  const dataGuru = [
+    { nama: "Ustazah Aisyah, S.Pd", peran: "Kepala Sekolah PAUD" },
+    { nama: "Ustazah Fatimah, S.Pd.I", peran: "Koordinator Tahfidz & Sentra Imtaq" },
+    { nama: "Ustazah Khadijah, S.Psi", peran: "Guru Bimbingan & Konseling Anak" },
+    { nama: "Ustazah Maryam, S.Pd", peran: "Wali Kelas KB 1 (Kelompok Bermain)" },
+    { nama: "Ustazah Salma, S.Pd", peran: "Wali Kelas KB 2 (Sentra Motorik)" },
+    { nama: "Ustazah Zahra, S.Pd", peran: "Wali Kelas TK A1 (Sentra Peran)" },
+    { nama: "Ustazah Aminah, S.Pd", peran: "Wali Kelas TK A2 (Sentra Balok)" },
+    { nama: "Ustazah Halimah, S.Pd.I", peran: "Wali Kelas TK B1 (Sentra Bahan Alam)" },
+    { nama: "Ustazah Nurul, S.Pd", peran: "Wali Kelas TK B2 (Sentra Persiapan)" },
+    { nama: "Ustazah Hidayah, S.Pd", peran: "Guru Pendamping Sentra Balok" },
+    { nama: "Ustazah Rania, S.Pd.I", peran: "Guru Tahfidz & Doa Harian" },
+    { nama: "Ustazah Azizah, S.Pd", peran: "Guru Sentra Seni & Musik Religi" },
+    { nama: "Ustazah Sabrina, S.Psi", peran: "Guru Pendamping Inklusi" },
+    { nama: "Ustazah Dina, S.Pd", peran: "Guru Sentra Bahasa & Cerita" },
+    { nama: "Ustazah Nadia, S.Pd", peran: "Guru Pendamping Sentra Alam" },
+    { nama: "Ustazah Fauziyah, S.Pd.I", peran: "Guru Mengaji Metode Qiroati" },
+    { nama: "Ustazah Safira, S.Pd", peran: "Guru Sentra Motorik Kasar" },
+    { nama: "Ustazah Yasmin, S.Pd", peran: "Guru Pendamping Sentra Peran" },
+    { nama: "Ustazah Maulida, S.Pd", peran: "Guru Bahasa Arab Dasar" },
+    { nama: "Ustazah Fitriani, S.Pd", peran: "Guru Bahasa Inggris Interaktif" },
+    { nama: "Ustazah Latifah, S.Pd.I", peran: "Guru Pembiasaan Adab Makan & Wudhu" },
+    { nama: "Ustazah Syifa, S.Psi", peran: "Konsultan Tumbuh Kembang" },
+    { nama: "Ustazah Dewi, S.Pd", peran: "Guru Pendamping Kelompok Bermain" },
+    { nama: "Ustazah Rahmah, S.Pd", peran: "Guru Sentra Sains Cilik" },
+    { nama: "Ustazah Qonita, S.Pd.I", peran: "Guru Tahfidz Juz Amma" },
+    { nama: "Ustazah Naila, S.Pd", peran: "Guru Kreasi Origami & Kriya" },
+    { nama: "Ustazah Tsabita, S.Pd", peran: "Guru Senam & Kebugaran Anak" },
+    { nama: "Ustazah Farida, S.Pd.I", peran: "Guru Kisah Para Nabi" },
+    { nama: "Ustazah Wardah, S.Pd", peran: "Guru Pendamping Persiapan Masuk SD" },
+    { nama: "Ustazah Zulfa, S.Pd", peran: "Guru Koordinator Ekstrakurikuler" }
+  ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#071E16] text-slate-100 pb-20">
-      
-      {/* HEADER PAGE */}
-      <section className="relative pt-10 pb-12 px-6 text-center border-b border-emerald-900/50">
-        <RevealOnScroll>
-          <Link href="/paud" className="inline-flex items-center gap-2 text-amber-400 hover:text-white mb-6 text-sm font-semibold transition-colors bg-emerald-900/30 px-4 py-2 rounded-full border border-emerald-800/50">
-            ← Kembali ke Halaman PAUD
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-100 pb-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 py-10 w-full space-y-10">
+        
+        {/* Tombol Kembali */}
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/paud" 
+            className="inline-flex items-center gap-2 text-base sm:text-lg font-black text-amber-400 hover:text-amber-300 transition group bg-[#0d4738] px-6 py-3 rounded-2xl border-2 border-emerald-500/50 shadow-md"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition" /> 
+            Kembali ke Profil PAUD
           </Link>
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-4 drop-shadow-md">
-            Daftar Tenaga Pendidik PAUD
-          </h1>
-          <p className="text-emerald-100/70 max-w-2xl mx-auto">
-            Mengenal lebih dekat para asatidzah yang berdedikasi tinggi dalam mendidik generasi penerus yang berakhlakul karimah.
-          </p>
-        </RevealOnScroll>
-      </section>
+        </div>
 
-      {/* GRID 30 GURU */}
-      <section className="max-w-7xl mx-auto px-6 py-12 w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {daftarGuru.map((guru, i) => (
-            <RevealOnScroll key={guru.id} delay={(i % 5) * 100}>
-              <div className="bg-[#041a12] border border-emerald-800/50 p-5 rounded-3xl hover:-translate-y-2 hover:border-amber-400/50 hover:shadow-[0_10px_20px_-10px_rgba(251,191,36,0.2)] transition-all duration-300 text-center group h-full flex flex-col justify-between">
-                <div>
-                  <div className="w-20 h-20 mx-auto rounded-full overflow-hidden border-2 border-emerald-600/50 group-hover:border-amber-400 transition-colors mb-4">
-                    <img src={guru.foto} alt={guru.nama} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  </div>
-                  <h3 className="font-bold text-white text-sm mb-1 group-hover:text-amber-400 transition-colors leading-snug">{guru.nama}</h3>
-                </div>
-                <p className="text-xs text-emerald-100/60 mt-2">{guru.peran}</p>
+        {/* Header Halaman */}
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight flex items-center justify-center gap-3">
+            <span className="text-amber-400 text-5xl">👩‍🏫</span> Dewan Tenaga Pendidik PAUD (30 Guru)
+          </h1>
+          <p className="text-emerald-50 text-xl sm:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
+            Para ustadzah penyayang, berdedikasi, dan bersertifikasi yang siap mendidik ananda tercinta.
+          </p>
+        </div>
+
+        {/* Grid 30 Kartu Pengajar */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {dataGuru.map((guru, i) => (
+            <div key={i} className="bg-[#071E16]/90 border-2 border-emerald-500/50 hover:border-amber-400 p-8 rounded-3xl text-center group hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(251,191,36,0.3)] transition-all duration-500 shadow-xl flex flex-col items-center">
+              <div className="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-emerald-400/60 mb-6 shadow-xl group-hover:border-amber-400 group-hover:scale-105 transition-all">
+                <MuslimahAvatar />
               </div>
-            </RevealOnScroll>
+              <h2 className="font-black text-amber-400 text-2xl sm:text-3xl mb-3 group-hover:text-amber-300 leading-snug">
+                {guru.nama}
+              </h2>
+              <p className="text-lg sm:text-xl text-emerald-100 font-semibold leading-relaxed">
+                {guru.peran}
+              </p>
+            </div>
           ))}
         </div>
-      </section>
 
+      </div>
     </div>
   );
 }

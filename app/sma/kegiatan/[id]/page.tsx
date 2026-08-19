@@ -6,36 +6,73 @@ import { ArrowLeft, Calendar } from 'lucide-react';
 
 export default function DetailKegiatanSmaPage() {
   const params = useParams();
-  const id = params.id;
+  const rawId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const id = rawId || '1';
 
-  const dataKegiatan: Record<string, any> = {
-    '1': { title: 'Studi Kampus (Campus Tour) ke PTN Favorit', date: '20 Agustus 2026', img: 'https://images.unsplash.com/photo-1523580494112-071d16940a1c?q=80&w=1200', content: 'Sebagai bagian dari program unggulan Sukses UTBK & SNBP, siswa kelas 12 diajak melakukan Campus Tour ke berbagai PTN favorit seperti Universitas Indonesia, ITB, dan UGM. Mereka berdiskusi langsung dengan alumni Al-Irsyad yang sudah berkuliah di sana.' },
-    '2': { title: 'Mukhayyam Al-Qur\'an & Tahfidz Camp', date: '15 Juli 2026', img: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1200', content: 'Kegiatan karantina tahfidz ini bertujuan untuk mempercepat target hafalan wajib siswa SMA sebelum lulus. Selama satu minggu, mereka fokus pada ziyadah (menambah hafalan) dan murajaah tanpa terganggu gadget.' },
-    '3': { title: 'Gelar Karya Ilmiah & Inovasi Pelajar', date: '10 Juni 2026', img: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200', content: 'Ekstrakurikuler Kelompok Ilmiah Remaja (KIR) memamerkan hasil penelitian terbaik mereka. Mulai dari inovasi energi terbarukan sederhana, daur ulang limbah, hingga presentasi penelitian sosial ekonomi.' },
-    '4': { title: 'Latihan Kepemimpinan Tingkat Menengah', date: '15 Mei 2026', img: 'https://images.unsplash.com/photo-1526976663112-0058b871c895?q=80&w=1200', content: 'Pembekalan intensif bagi Badan Pengurus Harian (BPH) OSIS SMA. Mereka dilatih menyusun proposal kegiatan, manajemen risiko, serta problem solving tingkat lanjut untuk mematangkan jiwa kepemimpinan.' }
+  // Data sinkron 100% dengan kartu kegiatan di halaman utama SMA
+  const dataKegiatan: Record<string, { title: string; date: string; img: string; content: string }> = {
+    '1': { 
+      title: 'Studi Kampus (Campus Tour PTN Favorit)', 
+      date: '18 Agustus 2026', 
+      img: 'https://placehold.co/1000x500/0d4738/fbbf24?text=Foto+Studi+Kampus', 
+      content: 'Santri kelas XII SMA Al-Irsyad Pekalongan melaksanakan program tahunan Studi Kampus dengan mengunjungi berbagai Perguruan Tinggi Negeri terkemuka seperti UI, ITB, dan UGM. Kegiatan ini bertujuan memberikan gambaran langsung mengenai lingkungan perkuliahan, pemilihan jurusan, serta memicu motivasi tinggi dalam menembus jalur SNBP dan SNBT-UTBK.' 
+    },
+    '2': { 
+      title: 'Mukhayyam Al-Qur\'an Intensif', 
+      date: '10 Agustus 2026', 
+      img: 'https://placehold.co/1000x500/0d4738/fbbf24?text=Foto+Mukhayyam+Quran', 
+      content: 'Mukhayyam Al-Qur\'an merupakan karantina tahfidz intensif selama sepekan penuh. Para santri memfokuskan waktu untuk memantapkan hafalan (ziyadah) dan menjaga kualitas hafalan (mutqin) dengan bimbingan langsung para masyaikh bersanad dalam suasana lingkungan yang kondusif.' 
+    },
+    '3': { 
+      title: 'Gelar Karya Ilmiah & Riset (KIR)', 
+      date: '02 Agustus 2026', 
+      img: 'https://placehold.co/1000x500/0d4738/fbbf24?text=Foto+Gelar+KIR', 
+      content: 'Sebagai wadah pengembangan nalar kritis dan budaya saintifik, siswa SMA Al-Irsyad mempresentasikan proyek penelitian inovasi teknologi, biologi terapan, dan kajian sosial humaniora di hadapan para dewan penguji akademisi dan praktisi industri.' 
+    }
   };
-  const item = dataKegiatan[id as string] || dataKegiatan['1'];
+
+  const item = dataKegiatan[id] || dataKegiatan['1'];
 
   return (
-    <div className="min-h-screen bg-[#071E16] text-slate-100 font-sans py-12 px-6">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <Link href="/sma/kegiatan" className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition group">
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition" /> Kembali ke Arsip Kegiatan SMA
-        </Link>
-        <article className="bg-[#0A291E] border border-emerald-800 rounded-3xl p-6 sm:p-10 space-y-6 shadow-2xl">
-          <div className="space-y-3">
-            <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 w-fit">
-              <Calendar className="w-3.5 h-3.5" /> {item.date}
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-100 pb-24 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 py-10 w-full space-y-8">
+        
+        {/* Tombol Kembali */}
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/sma" 
+            className="inline-flex items-center gap-2 text-base sm:text-lg font-black text-amber-400 hover:text-amber-300 transition group bg-[#0d4738] px-6 py-3 rounded-2xl border-2 border-emerald-500/50 shadow-md"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition" /> 
+            Kembali ke SMA
+          </Link>
+        </div>
+
+        {/* Konten Detail */}
+        <article className="bg-[#071E16]/90 backdrop-blur-md border-2 border-emerald-700/50 rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
+          
+          <div className="space-y-4">
+            <span className="text-base sm:text-lg font-bold text-amber-400 inline-flex items-center gap-2 bg-amber-400/10 px-4 py-1.5 rounded-full border border-amber-400/30">
+              <Calendar className="w-5 h-5" /> {item.date}
             </span>
-            <h1 className="text-2xl sm:text-4xl font-black text-white leading-tight">{item.title}</h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
+              {item.title}
+            </h1>
           </div>
-          <div className="h-72 sm:h-[400px] w-full rounded-2xl overflow-hidden shadow-xl">
+
+          <div className="h-80 sm:h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-400/30 bg-[#0d4738]">
             <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
           </div>
-          <div className="prose prose-invert max-w-none text-emerald-100/90 text-base leading-relaxed space-y-4 pt-4 border-t border-emerald-800/60">
+
+          <div className="text-emerald-50 text-xl sm:text-2xl leading-[1.8] font-normal text-justify space-y-6 pt-6 border-t border-emerald-800/60">
             <p>{item.content}</p>
+            <p>
+              Program terintegrasi ini dirancang agar santri SMA Al-Irsyad siap bersaing secara akademis di jenjang pendidikan tinggi dengan tetap teguh memegang prinsip adab dan integritas Islami.
+            </p>
           </div>
+
         </article>
+
       </div>
     </div>
   );

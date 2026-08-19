@@ -1,17 +1,22 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [unitDropdownOpen, setUnitDropdownOpen] = useState(false);
+  const [ppdbDropdownOpen, setPpdbDropdownOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#115e4f]/95 backdrop-blur-md border-b border-emerald-400/40 shadow-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#115e4f]/95 backdrop-blur-md border-b-2 border-emerald-400/40 shadow-2xl">
       
-      {/* RUNNING TEXT (Warna disesuaikan agar menyatu dengan hijau) */}
-      <div className="bg-[#0d4738] text-amber-400 font-extrabold text-[11px] sm:text-xs py-1.5 overflow-hidden whitespace-nowrap shadow-inner border-b border-emerald-600/50">
+      {/* 1. RUNNING TEXT */}
+      <div className="bg-[#0d4738] text-amber-400 font-black text-xs sm:text-sm py-2 overflow-hidden whitespace-nowrap shadow-inner border-b border-emerald-600/50">
         <div className="inline-block animate-marquee uppercase tracking-wider">
           ✨ Selamat Datang di Website Resmi Direktorat Pendidikan Al-Irsyad Al-Islamiyyah Kota Pekalongan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
           🚀 Pendaftaran Peserta Didik Baru (PPDB) Telah Dibuka! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -19,81 +24,187 @@ export default function Header() {
         </div>
       </div>
 
-      {/* NAVBAR UTAMA */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center h-16 sm:h-20">
+      {/* 2. AREA LOGO UTAMA DI TENGAH */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between relative">
         
-        {/* LOGO YAYASAN & TOMBOL KEMBALI + HOME */}
-        <div className="flex items-center gap-4 h-full py-2">
-          <Link href="/" className="flex items-center group h-full">
-            <img 
-              src="/logo-yayasan.png" 
-              alt="Logo Yayasan Al-Irsyad" 
-              className="h-full w-auto object-contain group-hover:scale-[1.02] transition-transform duration-300 drop-shadow-md" 
-            />
-          </Link>
-
-          {/* Muncul hanya jika BUKAN di halaman utama '/' */}
+        {/* TOMBOL KEMBALI & HOME (DIPERBESAR & LEBIH TEBAL) */}
+        <div className="w-1/4 hidden md:flex items-center gap-3">
           {pathname !== '/' && (
-            <div className="hidden sm:flex items-center gap-2">
+            <>
               <button 
                 onClick={() => router.back()} 
-                className="flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-white bg-[#0d4738] hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500/50 transition-all duration-300 shadow-sm cursor-pointer"
+                className="flex items-center gap-2 text-base lg:text-lg font-black text-amber-400 hover:text-emerald-950 bg-[#0d4738] hover:bg-amber-400 px-5 py-2.5 rounded-2xl border-2 border-emerald-400/80 hover:border-amber-400 transition-all duration-300 shadow-lg hover:-translate-y-0.5 cursor-pointer"
               >
-                <span className="text-sm leading-none -mt-0.5">←</span> Kembali
+                <span className="text-xl leading-none">←</span> Kembali
               </button>
-              
               <Link 
                 href="/" 
-                className="flex items-center gap-1.5 text-xs font-bold text-emerald-100 hover:text-white bg-[#0d4738] hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500/50 transition-all duration-300 shadow-sm"
+                className="flex items-center gap-2 text-base lg:text-lg font-black text-white hover:text-emerald-950 bg-[#0d4738] hover:bg-emerald-300 px-5 py-2.5 rounded-2xl border-2 border-emerald-400/80 hover:border-emerald-300 transition-all duration-300 shadow-lg hover:-translate-y-0.5"
               >
-                <span className="text-sm leading-none -mt-0.5">🏠</span> Home
+                <span className="text-xl leading-none">🏠</span> Home
               </Link>
-            </div>
+            </>
           )}
         </div>
 
-        {/* MENU NAVIGASI KANAN */}
-        <div className="hidden lg:flex items-center gap-5 text-xs font-bold text-emerald-100 h-full">
-          <Link href="/" className="hover:text-amber-400 transition">Beranda</Link>
-          
-          {/* DROPDOWN UNIT PENDIDIKAN */}
-          <div className="relative group h-full flex items-center">
-            <button className="hover:text-amber-400 transition flex items-center gap-1 h-full">
-              Unit Pendidikan <span className="text-[9px] mt-0.5">▼</span>
-            </button>
-            <div className="absolute top-full left-0 w-48 bg-[#115e4f] border border-emerald-400/50 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden">
-              <Link href="/paud" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">PAUD (KB & TK)</Link>
-              <Link href="/sd" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">SD Al-Irsyad</Link>
-              <Link href="/smp" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">SMP Al-Irsyad</Link>
-              <Link href="/sma" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">SMA Al-Irsyad</Link>
-            </div>
-          </div>
-          
-          {/* DROPDOWN FORMULIR PPDB */}
-          <div className="relative group h-full flex items-center">
-            <button className="hover:text-amber-400 transition flex items-center gap-1 h-full">
-              Formulir PPDB <span className="text-[9px] mt-0.5">▼</span>
-            </button>
-            <div className="absolute top-full left-0 w-52 bg-[#115e4f] border border-emerald-400/50 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden">
-              <Link href="/pendaftaran/paud" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar PAUD (KB & TK)</Link>
-              <Link href="/pendaftaran/sd" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar SD Al-Irsyad</Link>
-              <Link href="/pendaftaran/smp" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar SMP Al-Irsyad</Link>
-              <Link href="/pendaftaran/sma" className="px-4 py-3 hover:bg-[#0d4738] hover:text-amber-400 transition">Daftar SMA Al-Irsyad</Link>
-            </div>
-          </div>
-          
-          {/* LINK KARIR & QNA */}
-          <Link href="/#karir" className="hover:text-amber-400 transition flex items-center gap-1">
-            <span className="text-emerald-300">💼</span> Karir
+        {/* LOGO DI TENGAH */}
+        <div className="flex-1 flex justify-center py-1">
+          <Link 
+            href="/" 
+            className="group flex items-center justify-center bg-white px-5 sm:px-8 py-2 rounded-2xl border-2 border-emerald-400 shadow-xl w-full max-w-[340px] sm:max-w-[480px] md:max-w-[620px] overflow-hidden transition-transform duration-300 hover:scale-[1.02]"
+          >
+            <img 
+              src="/logo-yayasan.png" 
+              alt="Logo Yayasan Al-Irsyad & Kemendikbud" 
+              className="w-full h-auto max-h-16 sm:max-h-20 md:max-h-24 scale-105 sm:scale-110 object-contain drop-shadow-sm" 
+            />
           </Link>
-          
-          <Link href="/#qna" className="hover:text-amber-400 transition flex items-center gap-1">
-            <span className="text-emerald-300">❔</span> QNA
-          </Link>
-
         </div>
 
+        {/* TOMBOL HAMBURGER MOBILE (KHUSUS HP) */}
+        <div className="w-1/4 flex justify-end lg:hidden">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-3 rounded-2xl bg-[#0d4738] text-amber-400 border-2 border-emerald-400/60 shadow-lg cursor-pointer flex items-center justify-center hover:bg-[#115e4f] transition-all"
+            aria-label="Buka Menu"
+          >
+            {mobileMenuOpen ? (
+              <span className="text-2xl font-black leading-none block">✕</span>
+            ) : (
+              <span className="text-2xl font-black leading-none block">☰</span>
+            )}
+          </button>
+        </div>
+
+        {/* Spacer kanan untuk desktop penyeimbang */}
+        <div className="w-1/4 hidden lg:block"></div>
+
       </div>
+
+      {/* 3. MENU NAVIGASI DESKTOP */}
+      <div className="hidden lg:flex items-center justify-center gap-10 text-lg font-black text-emerald-50 py-2.5 border-t border-emerald-600/40 bg-[#0d4738]/60 w-full">
+        <Link href="/" className="hover:text-amber-400 transition-colors">
+          Beranda
+        </Link>
+        
+        {/* DROPDOWN UNIT PENDIDIKAN */}
+        <div className="relative group flex items-center">
+          <button className="hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer py-1">
+            Unit Pendidikan <span className="text-xs">▼</span>
+          </button>
+          <div className="absolute top-full left-1/2 -translate-x-1/2 w-60 bg-[#0d4738] border-2 border-emerald-400/60 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden p-2 z-50 mt-1">
+            <Link href="/paud" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">PAUD (KB & TK)</Link>
+            <Link href="/sd" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">SD Al-Irsyad</Link>
+            <Link href="/smp" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">SMP Al-Irsyad</Link>
+            <Link href="/sma" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">SMA Al-Irsyad</Link>
+          </div>
+        </div>
+        
+        {/* DROPDOWN FORMULIR PPDB */}
+        <div className="relative group flex items-center">
+          <button className="hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer py-1">
+            Formulir PPDB <span className="text-xs">▼</span>
+          </button>
+          <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-[#0d4738] border-2 border-emerald-400/60 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col overflow-hidden p-2 z-50 mt-1">
+            <Link href="/pendaftaran/paud" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">Daftar PAUD (KB & TK)</Link>
+            <Link href="/pendaftaran/sd" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">Daftar SD Al-Irsyad</Link>
+            <Link href="/pendaftaran/smp" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">Daftar SMP Al-Irsyad</Link>
+            <Link href="/pendaftaran/sma" className="px-4 py-3 rounded-xl font-bold text-base text-emerald-100 hover:bg-[#115e4f] hover:text-amber-400 transition">Daftar SMA Al-Irsyad</Link>
+          </div>
+        </div>
+        
+        <Link href="/#karir" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+          <span className="text-emerald-300">💼</span> Karir
+        </Link>
+        
+        <Link href="/#qna" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+          <span className="text-emerald-300">❔</span> QNA
+        </Link>
+      </div>
+
+      {/* 4. MENU MOBILE / HP */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-[#0d4738] border-b-4 border-amber-400 px-6 py-6 space-y-4 shadow-2xl max-h-[75vh] overflow-y-auto">
+          {pathname !== '/' && (
+            <div className="flex items-center gap-3 pb-3 border-b border-emerald-700/50">
+              <button 
+                onClick={() => { router.back(); setMobileMenuOpen(false); }} 
+                className="flex-1 py-3 text-center text-lg font-black text-amber-400 bg-[#115e4f] rounded-2xl border border-emerald-500/40"
+              >
+                ← Kembali
+              </button>
+              <Link 
+                href="/" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex-1 py-3 text-center text-lg font-black text-emerald-100 bg-[#115e4f] rounded-2xl border border-emerald-500/40"
+              >
+                🏠 Home
+              </Link>
+            </div>
+          )}
+
+          <Link 
+            href="/" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className="block text-xl font-black text-white hover:text-amber-400 py-2 border-b border-emerald-800/60 text-center"
+          >
+            Beranda
+          </Link>
+
+          <div>
+            <button 
+              onClick={() => setUnitDropdownOpen(!unitDropdownOpen)} 
+              className="w-full flex justify-between items-center text-xl font-black text-white hover:text-amber-400 py-2 border-b border-emerald-800/60"
+            >
+              <span>Unit Pendidikan</span>
+              <span className="text-sm">{unitDropdownOpen ? '▲' : '▼'}</span>
+            </button>
+            {unitDropdownOpen && (
+              <div className="py-2 space-y-2 bg-[#115e4f]/50 rounded-2xl my-2 border border-emerald-500/30 text-center">
+                <Link href="/paud" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">PAUD (KB & TK)</Link>
+                <Link href="/sd" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">SD Al-Irsyad</Link>
+                <Link href="/smp" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">SMP Al-Irsyad</Link>
+                <Link href="/sma" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">SMA Al-Irsyad</Link>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <button 
+              onClick={() => setPpdbDropdownOpen(!ppdbDropdownOpen)} 
+              className="w-full flex justify-between items-center text-xl font-black text-white hover:text-amber-400 py-2 border-b border-emerald-800/60"
+            >
+              <span>Formulir PPDB</span>
+              <span className="text-sm">{ppdbDropdownOpen ? '▲' : '▼'}</span>
+            </button>
+            {ppdbDropdownOpen && (
+              <div className="py-2 space-y-2 bg-[#115e4f]/50 rounded-2xl my-2 border border-emerald-500/30 text-center">
+                <Link href="/pendaftaran/paud" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">Daftar PAUD (KB & TK)</Link>
+                <Link href="/pendaftaran/sd" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">Daftar SD Al-Irsyad</Link>
+                <Link href="/pendaftaran/smp" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">Daftar SMP Al-Irsyad</Link>
+                <Link href="/pendaftaran/sma" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-lg font-bold text-emerald-100 hover:text-amber-400">Daftar SMA Al-Irsyad</Link>
+              </div>
+            )}
+          </div>
+
+          <Link 
+            href="/#karir" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className="block text-xl font-black text-white hover:text-amber-400 py-2 border-b border-emerald-800/60 text-center"
+          >
+            💼 Karir
+          </Link>
+
+          <Link 
+            href="/#qna" 
+            onClick={() => setMobileMenuOpen(false)} 
+            className="block text-xl font-black text-white hover:text-amber-400 py-2 text-center"
+          >
+            ❔ QNA
+          </Link>
+        </div>
+      )}
+
     </header>
   );
 }

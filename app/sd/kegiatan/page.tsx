@@ -1,65 +1,79 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Calendar, ArrowLeft } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { ArrowLeft, Calendar } from 'lucide-react';
 
-function RevealOnScroll({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } }, { threshold: 0.1 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  return <div ref={ref} style={{ transitionDelay: `${delay}ms` }} className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>{children}</div>;
-}
+export default function DetailKegiatanSdPage() {
+  const params = useParams();
+  const rawId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const id = rawId || '1';
 
-export default function SemuaKegiatanSdPage() {
-  const daftarKegiatan = [
-    { id: '1', title: 'Perkemahan Pramuka Tingkat Penggalang', date: '12 Agustus 2026', img: 'https://images.unsplash.com/photo-1523580494112-071d16940a1c?q=80&w=1200&auto=format&fit=crop', desc: 'Melatih kemandirian, kedisiplinan, dan kerja sama tim melalui kegiatan Perkemahan Pramuka di alam terbuka.' },
-    { id: '2', title: 'Mabit (Malam Bina Iman dan Taqwa)', date: '20 Juli 2026', img: 'https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?q=80&w=1200&auto=format&fit=crop', desc: 'Kegiatan qiyamullail bersama, muhasabah, dan pembinaan karakter spiritual siswa.' },
-    { id: '3', title: 'Market Day: Belajar Wirausaha Islami', date: '10 Juni 2026', img: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=1200&auto=format&fit=crop', desc: 'Praktik langsung jual beli sehat, jujur, dan melatih jiwa enterpreneurship sejak SD.' },
-    { id: '4', title: 'Pelatihan Dokter Kecil & Kesehatan', date: '15 Mei 2026', img: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1200&auto=format&fit=crop', desc: 'Edukasi pertolongan pertama pada kecelakaan dan pola hidup sehat di lingkungan sekolah.' },
-    { id: '5', title: 'Lomba Tahfidz Al-Qur\'an Antar Kelas', date: '02 Mei 2026', img: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1200&auto=format&fit=crop', desc: 'Menyaring bibit-bibit unggul penghafal Al-Qur\'an juz 29 dan 30 di lingkungan SD Al-Irsyad.' }
-  ];
+  // Data sinkron dengan kartu di halaman utama SD
+  const dataKegiatan: Record<string, { title: string; date: string; img: string; content: string }> = {
+    '1': { 
+      title: 'Perkemahan Pramuka Penggalang', 
+      date: '14 Agustus 2026', 
+      img: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1200&auto=format&fit=crop', 
+      content: 'Kegiatan Perkemahan Pramuka Penggalang SD Al-Irsyad Pekalongan diadakan untuk melatih kemandirian, kedisiplinan, kepemimpinan, dan kerja sama antar regu di alam terbuka dengan tetap menjaga nilai ibadah dan sholat berjamaah.' 
+    },
+    '2': { 
+      title: 'Mabit (Malam Bina Iman dan Taqwa)', 
+      date: '08 Agustus 2026', 
+      img: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=1200&auto=format&fit=crop', 
+      content: 'Mabit rutin diselenggarakan bagi siswa kelas atas sebagai sarana penguatan ruhiyah, qiyamullail bersama, tadarus Al-Qur\'an, serta muhasabah diri untuk membentuk kepribadian yang taat beribadah dan berbakti kepada orang tua.' 
+    },
+    '3': { 
+      title: 'Market Day Cilik Islami', 
+      date: '25 Juli 2026', 
+      img: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1200&auto=format&fit=crop', 
+      content: 'Melalui program Market Day, para santri SD Al-Irsyad belajar praktik berniaga secara jujur sesuai prinsip ekonomi Islam, melatih kemampuan berhitung, komunikasi, serta menumbuhkan jiwa entrepreneur sejak dini.' 
+    }
+  };
+
+  const item = dataKegiatan[id] || dataKegiatan['1'];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#071E16] text-slate-100 pb-20 font-sans">
-      <section className="relative pt-12 pb-10 px-6 text-center border-b border-emerald-900/50">
-        <RevealOnScroll>
-          <Link href="/sd" className="inline-flex items-center gap-2 text-amber-400 hover:text-white mb-6 text-xs font-bold transition-colors bg-emerald-900/30 px-4 py-2 rounded-full border border-emerald-800/50">
-            <ArrowLeft className="w-4 h-4" /> Kembali ke Halaman Utama SD
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-100 pb-24 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 py-10 w-full space-y-8">
+        
+        {/* Tombol Kembali */}
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/sd" 
+            className="inline-flex items-center gap-2 text-base sm:text-lg font-black text-amber-400 hover:text-amber-300 transition group bg-[#0d4738] px-6 py-3 rounded-2xl border-2 border-emerald-500/50 shadow-md"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition" /> 
+            Kembali ke SD
           </Link>
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-4 drop-shadow-md">Arsip Kegiatan SD Al-Irsyad</h1>
-          <p className="text-emerald-100/70 max-w-2xl mx-auto text-sm sm:text-base font-light">Dokumentasi lengkap seluruh kegiatan ekstrakurikuler, keagamaan, dan pengembangan siswa di SD Al-Irsyad Pekalongan.</p>
-        </RevealOnScroll>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 py-12 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {daftarKegiatan.map((item, i) => (
-            <RevealOnScroll key={item.id} delay={(i % 3) * 150}>
-              <div className="bg-[#041a12] border border-emerald-800/50 rounded-3xl overflow-hidden hover:-translate-y-2 hover:border-amber-400/50 transition-all duration-500 flex flex-col h-full group">
-                <div className="h-52 relative overflow-hidden"><img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" /></div>
-                <div className="p-6 flex flex-col flex-1 justify-between space-y-4">
-                  <div className="space-y-2">
-                    <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 w-fit"><Calendar className="w-3.5 h-3.5" /> {item.date}</span>
-                    <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors leading-snug">{item.title}</h3>
-                    <p className="text-sm text-emerald-100/70 line-clamp-2 font-light">{item.desc}</p>
-                  </div>
-                  {/* LINK KE /sd/kegiatan/[id] */}
-                  <div className="pt-4 border-t border-emerald-800/40">
-                    <Link href={`/sd/kegiatan/${item.id}`} className="inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors group/link">
-                      Selengkapnya <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </RevealOnScroll>
-          ))}
         </div>
-      </section>
+
+        {/* Konten Detail */}
+        <article className="bg-[#071E16]/90 backdrop-blur-md border-2 border-emerald-700/50 rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
+          
+          <div className="space-y-4">
+            <span className="text-base sm:text-lg font-bold text-amber-400 inline-flex items-center gap-2 bg-amber-400/10 px-4 py-1.5 rounded-full border border-amber-400/30">
+              <Calendar className="w-5 h-5" /> {item.date}
+            </span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
+              {item.title}
+            </h1>
+          </div>
+
+          <div className="h-80 sm:h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-400/30 bg-[#0d4738]">
+            <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
+          </div>
+
+          <div className="text-emerald-50 text-xl sm:text-2xl leading-[1.8] font-normal text-justify space-y-6 pt-6 border-t border-emerald-800/60">
+            <p>{item.content}</p>
+            <p>
+              Program ini menjadi bagian dari komitmen SD Al-Irsyad Pekalongan untuk menghadirkan pengalaman belajar yang holistik, seimbang antara prestasi akademik dan akhlakul karimah.
+            </p>
+          </div>
+
+        </article>
+
+      </div>
     </div>
   );
 }

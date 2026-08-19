@@ -6,36 +6,73 @@ import { ArrowLeft, Calendar } from 'lucide-react';
 
 export default function DetailKegiatanSmpPage() {
   const params = useParams();
-  const id = params.id;
+  const rawId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const id = rawId || '1';
 
-  const dataKegiatan: Record<string, any> = {
-    '1': { title: 'Latihan Dasar Kepemimpinan Siswa (LDKS)', date: '15 Agustus 2026', img: 'https://images.unsplash.com/photo-1523580494112-071d16940a1c?q=80&w=1200', content: 'Kegiatan LDKS (Latihan Dasar Kepemimpinan Siswa) diadakan bagi calon pengurus OSIS SMP Al-Irsyad. Di sini mereka digembleng masalah kedisiplinan, public speaking, cara memimpin rapat, dan problem solving. Semua materi dibalut dengan pendekatan nilai-nilai agama Islam.' },
-    '2': { title: 'Pameran Ekstrakurikuler Robotik', date: '20 Juli 2026', img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200', content: 'Salah satu ekstrakurikuler unggulan SMP Al-Irsyad adalah Robotik dan Coding. Pada akhir semester, siswa memamerkan karya mereka berupa smart trash bin, line follower robot, dan proyek IoT sederhana di hadapan para wali murid dan guru.' },
-    '3': { title: 'Muhadharah 3 Bahasa', date: '10 Juni 2026', img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1200', content: 'Untuk melatih mental berani tampil dan kecakapan berbahasa global, siswa-siswi secara bergantian melaksanakan muhadharah. Mereka ditantang membawakan pidato dalam Bahasa Arab, Inggris, maupun Indonesia di lapangan utama sekolah.' },
-    '4': { title: 'Outing Class & Kunjungan Museum', date: '15 Mei 2026', img: 'https://images.unsplash.com/photo-1562910398-963a7ecfa970?q=80&w=1200', content: 'Bentuk nyata merdeka belajar, siswa SMP Al-Irsyad melakukan studi tur dan observasi langsung ke museum bersejarah. Kegiatan ini kemudian diakhiri dengan pembuatan laporan karya tulis ilmiah berkelompok.' }
+  // Data sinkron 100% dengan kartu di halaman utama SMP
+  const dataKegiatan: Record<string, { title: string; date: string; img: string; content: string }> = {
+    '1': { 
+      title: 'LDKS OSIS SMP Al-Irsyad', 
+      date: '18 Agustus 2026', 
+      img: 'https://placehold.co/1000x500/0d4738/fbbf24?text=Foto+LDKS+OSIS', 
+      content: 'Kegiatan LDKS (Latihan Dasar Kepemimpinan Siswa) diadakan bagi seluruh jajaran pengurus OSIS SMP Al-Irsyad Pekalongan. Santri digembleng materi kepemimpinan, manajemen organisasi, teknik persidangan, public speaking, serta penyusunan program kerja kreatif yang berlandaskan nilai-nilai Islam.' 
+    },
+    '2': { 
+      title: 'Ekskul Robotik & Coding', 
+      date: '12 Agustus 2026', 
+      img: 'https://placehold.co/1000x500/0d4738/fbbf24?text=Foto+Ekskul+Robotik', 
+      content: 'Ekstrakurikuler robotik dan pemrograman dasar melatih logika berpikir komputasional para santri. Siswa dibimbing langsung untuk merakit modul mikrokontroler, sensor cerdas, serta merancang robot pemilah objek untuk persiapan lomba teknologi tingkat nasional.' 
+    },
+    '3': { 
+      title: 'Muhadharah (Pidato 3 Bahasa)', 
+      date: '05 Agustus 2026', 
+      img: 'https://placehold.co/1000x500/0d4738/fbbf24?text=Foto+Muhadharah', 
+      content: 'Program Muhadharah rutin diadakan setiap pekan untuk mengasah keberanian public speaking santri SMP Al-Irsyad dalam tiga bahasa utama: Bahasa Arab, Bahasa Inggris, dan Bahasa Indonesia dengan tema keislaman dan sains modern.' 
+    }
   };
-  const item = dataKegiatan[id as string] || dataKegiatan['1'];
+
+  const item = dataKegiatan[id] || dataKegiatan['1'];
 
   return (
-    <div className="min-h-screen bg-[#071E16] text-slate-100 font-sans py-12 px-6">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <Link href="/smp/kegiatan" className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition group">
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition" /> Kembali ke Arsip Kegiatan SMP
-        </Link>
-        <article className="bg-[#0A291E] border border-emerald-800 rounded-3xl p-6 sm:p-10 space-y-6 shadow-2xl">
-          <div className="space-y-3">
-            <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 w-fit">
-              <Calendar className="w-3.5 h-3.5" /> {item.date}
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-100 pb-24 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 py-10 w-full space-y-8">
+        
+        {/* Tombol Kembali */}
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/smp" 
+            className="inline-flex items-center gap-2 text-base sm:text-lg font-black text-amber-400 hover:text-amber-300 transition group bg-[#0d4738] px-6 py-3 rounded-2xl border-2 border-emerald-500/50 shadow-md"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition" /> 
+            Kembali ke SMP
+          </Link>
+        </div>
+
+        {/* Konten Detail */}
+        <article className="bg-[#071E16]/90 backdrop-blur-md border-2 border-emerald-700/50 rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
+          
+          <div className="space-y-4">
+            <span className="text-base sm:text-lg font-bold text-amber-400 inline-flex items-center gap-2 bg-amber-400/10 px-4 py-1.5 rounded-full border border-amber-400/30">
+              <Calendar className="w-5 h-5" /> {item.date}
             </span>
-            <h1 className="text-2xl sm:text-4xl font-black text-white leading-tight">{item.title}</h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
+              {item.title}
+            </h1>
           </div>
-          <div className="h-72 sm:h-[400px] w-full rounded-2xl overflow-hidden shadow-xl">
+
+          <div className="h-80 sm:h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-400/30 bg-[#0d4738]">
             <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
           </div>
-          <div className="prose prose-invert max-w-none text-emerald-100/90 text-base leading-relaxed space-y-4 pt-4 border-t border-emerald-800/60">
+
+          <div className="text-emerald-50 text-xl sm:text-2xl leading-[1.8] font-normal text-justify space-y-6 pt-6 border-t border-emerald-800/60">
             <p>{item.content}</p>
+            <p>
+              Melalui program pembinaan kesiswaan yang terarah, SMP Al-Irsyad senantiasa berkomitmen membentuk generasi pemimpin yang cerdas, berwawasan global, dan berakhlak mulia.
+            </p>
           </div>
+
         </article>
+
       </div>
     </div>
   );

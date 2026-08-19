@@ -2,63 +2,299 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 
 function RevealOnScroll({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } }, { threshold: 0.15 });
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
-  return <div ref={ref} style={{ transitionDelay: `${delay}ms` }} className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>{children}</div>;
+  return <div ref={ref} style={{ transitionDelay: `${delay}ms` }} className={`transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-95'}`}>{children}</div>;
 }
 
-export default function SemuaPrestasiSmaPage() {
-  const daftarPrestasi = [
-    { id: '1', juara: 'Medali Emas OSN Kimia', event: 'Tingkat Nasional 2026', foto: 'https://placehold.co/600x400/041a12/fbbf24?text=Prestasi+SMA+1', desc: 'Mengharumkan nama sekolah di kancah nasional, siswa kita sukses menyabet emas OSN Kimia.' },
-    { id: '2', juara: 'Lolos SNBP Kedokteran UI', event: 'Seleksi Nasional', foto: 'https://placehold.co/600x400/041a12/fbbf24?text=Prestasi+SMA+2', desc: 'Lulusan SMA Al-Irsyad berhasil menembus fakultas impian melalui jalur undangan prestasi.' },
-    { id: '3', juara: 'Juara 1 Debat Bahasa Inggris', event: 'English National Debate', foto: 'https://placehold.co/600x400/041a12/fbbf24?text=Prestasi+SMA+3', desc: 'Argumen yang tajam dan kemampuan bahasa Inggris tingkat lanjut membawa piala kemenangan.' },
-    { id: '4', juara: 'Juara 1 Lomba Karya Ilmiah', event: 'Olimpiade Peneliti Siswa', foto: 'https://placehold.co/600x400/041a12/fbbf24?text=Prestasi+SMA+4', desc: 'Inovasi teknologi tepat guna karya tim KIR SMA Al-Irsyad berhasil menarik perhatian juri nasional.' }
-  ];
-
+function MuslimAvatar() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#071E16] text-slate-100 pb-20 font-sans">
-      <section className="relative pt-12 pb-10 px-6 text-center border-b border-emerald-900/50">
-        <RevealOnScroll>
-          <Link href="/sma" className="inline-flex items-center gap-2 text-amber-400 hover:text-white mb-6 text-xs font-bold transition-colors bg-emerald-900/30 px-4 py-2 rounded-full border border-emerald-800/50">
-            <ArrowLeft className="w-4 h-4" /> Kembali ke Halaman Utama SMA
-          </Link>
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-4 drop-shadow-md">Arsip Prestasi Siswa SMA</h1>
-          <p className="text-emerald-100/70 max-w-2xl mx-auto text-sm sm:text-base font-light">Bukti nyata kegigihan, kerja keras, dan kualitas pendidikan SMA Al-Irsyad baik di kancah regional maupun nasional.</p>
+    <div className="w-full h-full bg-[#0d4738] flex items-center justify-center relative overflow-hidden">
+      <svg viewBox="0 0 100 100" className="w-24 h-24 text-emerald-300/80 mt-3" fill="currentColor">
+        <path d="M20 90 C20 70, 35 60, 50 60 C65 60, 80 70, 80 90 Z" />
+        <circle cx="50" cy="45" r="16" fill="#fef3c7" />
+        <path d="M34 40 C34 30, 66 30, 66 40 L66 42 L34 42 Z" fill="#064e3b" />
+      </svg>
+    </div>
+  );
+}
+
+function MuslimahAvatar() {
+  return (
+    <div className="w-full h-full bg-[#0d4738] flex items-center justify-center relative overflow-hidden">
+      <svg viewBox="0 0 100 100" className="w-24 h-24 text-emerald-300/80 mt-3" fill="currentColor">
+        <path d="M20 90 C20 70, 35 60, 50 60 C65 60, 80 70, 80 90 Z" />
+        <path d="M50 15 C30 15, 20 30, 20 55 C20 75, 35 85, 50 85 C65 85, 80 75, 80 55 C80 30, 70 15, 50 15 Z" fill="#064e3b" stroke="#34d399" strokeWidth="3" />
+        <circle cx="50" cy="48" r="16" fill="#fef3c7" />
+      </svg>
+    </div>
+  );
+}
+
+export default function SmaPage() {
+  return (
+    <div className="flex flex-col min-h-screen bg-transparent text-slate-100 pb-20 overflow-hidden">
+      
+      {/* HERO SECTION */}
+      <section className="relative pt-12 pb-10 px-6 text-center">
+        <RevealOnScroll delay={100}>
+          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0d4738] border border-emerald-400/50 text-amber-400 text-base sm:text-lg font-black mb-6 tracking-widest shadow-md">
+            ✨ USIA 16 - 18 TAHUN
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 drop-shadow-md tracking-tight">
+            SMA Al-Irsyad <br /> Pekalongan
+          </h1>
+          <p className="text-emerald-50 max-w-3xl mx-auto leading-relaxed text-xl sm:text-2xl font-medium">
+            Mencetak pemuda berprestasi, berwawasan global, unggul dalam UTBK & PTN, serta teguh pada manhaj yang lurus.
+          </p>
         </RevealOnScroll>
       </section>
 
-      <section className="max-w-7xl mx-auto px-6 py-12 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {daftarPrestasi.map((item, i) => (
-            <RevealOnScroll key={item.id} delay={(i % 3) * 150}>
-              <div className="bg-[#041a12] border border-emerald-800/50 rounded-3xl overflow-hidden hover:-translate-y-2 hover:border-amber-400/50 transition-all duration-500 flex flex-col h-full relative group">
-                <div className="absolute top-4 right-4 z-20 text-4xl drop-shadow-md group-hover:scale-125 transition-all">🥇</div>
-                <div className="h-48 relative overflow-hidden"><img src={item.foto} alt={item.juara} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" /></div>
-                <div className="p-6 flex flex-col flex-1 justify-between space-y-4 bg-[#041a12]">
-                  <div className="space-y-2">
-                    <span className="text-xs font-bold text-amber-300 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 w-fit block">{item.event}</span>
-                    <h3 className="text-lg font-bold text-amber-400 group-hover:text-amber-300 transition-colors leading-snug">{item.juara}</h3>
-                    <p className="text-sm text-emerald-100/70 font-light line-clamp-2">{item.desc}</p>
+      {/* SAMBUTAN */}
+      <section className="max-w-5xl mx-auto px-6 py-6 w-full mb-8">
+        <RevealOnScroll delay={200}>
+          <div className="bg-[#071E16]/90 backdrop-blur-md border border-emerald-700/50 rounded-3xl p-8 sm:p-12 shadow-2xl relative flex flex-col md:flex-row gap-8 items-center hover:border-amber-400/40 transition-colors duration-500">
+            <div className="w-48 h-48 flex-shrink-0 rounded-full overflow-hidden border-4 border-emerald-400/40 shadow-lg group">
+              <MuslimAvatar />
+            </div>
+            <div className="text-center md:text-left flex-1">
+              <div className="inline-block px-4 py-2 rounded-full bg-[#115e4f] border border-emerald-400/40 text-emerald-200 text-sm sm:text-base font-black mb-3 tracking-widest uppercase">
+                Sambutan Kepala Sekolah
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-2">Ustadz Ibrahim, M.Si</h2>
+              <p className="text-amber-400 text-lg sm:text-xl font-bold mb-4">- Kepala SMA Al-Irsyad -</p>
+              <p className="text-emerald-50 leading-relaxed text-lg sm:text-xl font-normal text-justify">
+                "Di tingkat SMA, tantangan pemikiran dan akademis semakin nyata. Kami mendidik santri untuk siap bersaing di perguruan tinggi favorit (PTN) melalui program sukses UTBK, tanpa meninggalkan identitas akhlak dan akidah Islam."
+              </p>
+            </div>
+          </div>
+        </RevealOnScroll>
+      </section>
+
+      {/* VIDEO */}
+      <section className="max-w-6xl mx-auto px-6 py-12 w-full">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl font-black text-white mb-8 flex items-center gap-3">
+            <span className="text-amber-400 text-4xl">🎥</span> Galeri Video Sekolah
+          </h2>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            { judul: "Video Profil SMA", desc: "Fasilitas Lab, Program UTBK, dan ekstrakurikuler unggulan.", thumbnail: "https://placehold.co/600x340/0d4738/fbbf24?text=Video+Profil+SMA" },
+            { judul: "Kilas Balik Lulusan PTN", desc: "Testimoni alumni SMA Al-Irsyad di kampus favorit.", thumbnail: "https://placehold.co/600x340/0d4738/fbbf24?text=Alumni+PTN" }
+          ].map((vid, i) => (
+            <RevealOnScroll key={i} delay={(i+1) * 200}>
+              <div className="group relative bg-[#0d4738] border border-emerald-400/50 rounded-3xl overflow-hidden hover:-translate-y-2 hover:border-amber-400/50 hover:shadow-[0_10px_40px_-10px_rgba(251,191,36,0.3)] transition-all duration-500 cursor-pointer">
+                <div className="aspect-video relative overflow-hidden">
+                  <img src={vid.thumbnail} alt={vid.judul} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-500 flex items-center justify-center z-10">
+                    <span className="text-6xl drop-shadow-lg group-hover:scale-125 transition-transform duration-500">▶️</span>
                   </div>
-                  <div className="pt-4 border-t border-emerald-800/40">
-                    <Link href={`/sma/prestasi/${item.id}`} className="inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors group/link">
-                      Selengkapnya <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-                    </Link>
-                  </div>
+                </div>
+                <div className="p-7">
+                  <h3 className="text-2xl sm:text-3xl font-black text-amber-400 mb-3 group-hover:text-amber-300 transition-colors">{vid.judul}</h3>
+                  <p className="text-lg sm:text-xl text-emerald-50 leading-relaxed font-normal">{vid.desc}</p>
                 </div>
               </div>
             </RevealOnScroll>
           ))}
         </div>
       </section>
+
+      {/* KEGIATAN (LINK LANGSUNG AKTIF KE DETAIL ID) */}
+      <section className="max-w-6xl mx-auto px-6 py-12 w-full">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 flex items-center gap-3">
+            <span className="text-amber-400 text-4xl">📸</span> Foto & Artikel Kegiatan
+          </h2>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+          {[
+            { id: '1', judul: "Studi Kampus (Campus Tour)", desc: "Kunjungan ke PTN favorit untuk memotivasi siswa.", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Kegiatan+SMA+1" },
+            { id: '2', judul: "Mukhayyam Al-Qur'an", desc: "Karantina tahfidz intensif selama 1 minggu.", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Kegiatan+SMA+2" },
+            { id: '3', judul: "Gelar Karya Ilmiah (KIR)", desc: "Presentasi proyek sains dan inovasi siswa.", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Kegiatan+SMA+3" }
+          ].map((item, i) => (
+            <RevealOnScroll key={i} delay={(i+1) * 200}>
+              <Link href={`/sma/kegiatan/${item.id}`} className="group overflow-hidden rounded-3xl border-2 border-emerald-400/50 hover:border-amber-400 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(52,211,153,0.3)] transition-all duration-500 bg-[#0d4738] cursor-pointer flex flex-col h-full block">
+                <div className="h-56 relative overflow-hidden">
+                  <img src={item.foto} alt={item.judul} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                </div>
+                <div className="p-7 border-t border-emerald-400/30 flex-1 flex flex-col justify-center">
+                  <h4 className="font-black text-2xl sm:text-3xl text-white mb-3 group-hover:text-amber-400 transition-colors leading-snug">{item.judul}</h4>
+                  <p className="text-lg sm:text-xl text-emerald-50 leading-relaxed line-clamp-3 font-normal">{item.desc}</p>
+                </div>
+              </Link>
+            </RevealOnScroll>
+          ))}
+        </div>
+        <div className="text-center">
+          <Link href="/sma/kegiatan" className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl bg-[#0d4738] border-2 border-emerald-400/80 text-emerald-100 hover:text-emerald-950 hover:bg-amber-400 hover:border-amber-400 text-xl font-black transition-all duration-300 shadow-xl">
+            Lihat Semua Kegiatan <span className="text-2xl">→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* PRESTASI (LINK LANGSUNG AKTIF KE DETAIL ID) */}
+      <section className="max-w-6xl mx-auto px-6 py-12 w-full">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 flex items-center gap-3">
+            <span className="text-amber-400 text-4xl">🏆</span> Prestasi Siswa
+          </h2>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-10">
+          {[
+            { id: '1', juara: "Emas OSN Kimia", event: "Tingkat Nasional 2026", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Prestasi+SMA+1" },
+            { id: '2', juara: "Lolos SNBP Kedokteran", event: "Universitas Indonesia", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Prestasi+SMA+2" },
+            { id: '3', juara: "Juara 1 Debat Bahasa Inggris", event: "English National Debate", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Prestasi+SMA+3" }
+          ].map((item, i) => (
+            <RevealOnScroll key={i} delay={(i+1) * 200}>
+              <Link href={`/sma/prestasi/${item.id}`} className="group overflow-hidden rounded-3xl border-2 border-emerald-400/50 hover:border-amber-400 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(251,191,36,0.3)] transition-all duration-500 bg-[#0d4738] cursor-pointer flex flex-col h-full relative block">
+                <div className="absolute top-4 right-4 z-20 text-5xl drop-shadow-md group-hover:scale-125 transition-all">🥇</div>
+                <div className="h-56 relative overflow-hidden">
+                  <img src={item.foto} alt={item.juara} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
+                </div>
+                <div className="p-7 border-t border-emerald-400/30 flex-1 relative z-10 bg-[#0d4738] flex flex-col justify-center">
+                  <h4 className="text-2xl sm:text-3xl font-black text-amber-400 mb-2 group-hover:text-amber-300 transition-colors leading-snug">{item.juara}</h4>
+                  <p className="text-lg sm:text-xl text-emerald-100 font-medium">{item.event}</p>
+                </div>
+              </Link>
+            </RevealOnScroll>
+          ))}
+        </div>
+        <div className="text-center">
+          <Link href="/sma/prestasi" className="inline-flex items-center justify-center gap-3 px-10 py-4 rounded-2xl bg-[#0d4738] border-2 border-emerald-400/80 text-emerald-100 hover:text-emerald-950 hover:bg-amber-400 hover:border-amber-400 text-xl font-black transition-all duration-300 shadow-xl">
+            Lihat Semua Prestasi <span className="text-2xl">→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* TENAGA PENDIDIK */}
+      <section className="max-w-6xl mx-auto px-6 py-12 w-full text-center">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 flex items-center justify-center gap-3">
+            <span className="text-amber-400 text-4xl">👩‍🏫</span> Tenaga Pendidik
+          </h2>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
+           {[
+             { nama: "Ustadz Ibrahim, M.Si", peran: "Kepala Sekolah & Guru Fisika", gender: "M" },
+             { nama: "Ustazah Aini, M.Pd", peran: "Wakasek Kurikulum & Biologi", gender: "F" },
+             { nama: "Ustadz Yasin, Lc. MA", peran: "Guru PAI & Bahasa Arab", gender: "M" }
+           ].map((guru, i) => (
+             <RevealOnScroll key={i} delay={(i+1) * 200}>
+                <div className="bg-[#0d4738] border-2 border-emerald-400/50 p-8 rounded-3xl text-center group hover:-translate-y-2 hover:border-amber-400 hover:shadow-[0_10px_30px_-10px_rgba(251,191,36,0.2)] transition-all duration-500">
+                   <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-emerald-400/60 mb-5 shadow-lg group-hover:border-amber-400 transition-colors">
+                     {guru.gender === 'M' ? <MuslimAvatar /> : <MuslimahAvatar />}
+                   </div>
+                   <h3 className="font-black text-amber-400 text-2xl sm:text-3xl mb-2">{guru.nama}</h3>
+                   <p className="text-lg sm:text-xl text-emerald-50 font-medium">{guru.peran}</p>
+                </div>
+             </RevealOnScroll>
+           ))}
+        </div>
+        <RevealOnScroll delay={800}>
+          <Link href="/sma/pengajar" className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xl font-black transition-all duration-300 shadow-lg hover:-translate-y-1">
+            Lihat 30+ Pengajar Lainnya <span>→</span>
+          </Link>
+        </RevealOnScroll>
+      </section>
+
+      {/* KURIKULUM */}
+      <section className="max-w-7xl mx-auto px-6 py-12 w-full">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 flex items-center gap-3">
+            <span className="text-amber-400 text-4xl">📚</span> Kurikulum & Pembelajaran
+          </h2>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { ikon: "🎯", judul: "Sukses UTBK & PTN", desc: "Bimbingan intensif dan tryout berkala untuk menembus Perguruan Tinggi Negeri favorit." },
+            { ikon: "🔬", judul: "Sains & Riset (KIR)", desc: "Pengembangan kemampuan berpikir ilmiah melalui eksperimen lab dan karya tulis." },
+            { ikon: "📖", judul: "Tahfidz & Syar'i", desc: "Pemantapan hafalan Al-Qur'an serta pendalaman ilmu agama dan adab Islami." },
+            { ikon: "💡", judul: "Leadership & Karakter", desc: "Pelatihan kemandirian, manajemen organisasi, dan tanggung jawab sosial." }
+          ].map((item, i) => (
+            <RevealOnScroll key={i} delay={(i+1) * 150}>
+              <div className="group overflow-hidden rounded-3xl border-2 border-emerald-400/50 hover:border-amber-400 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(251,191,36,0.3)] transition-all duration-500 bg-[#0d4738] p-7 cursor-default h-full flex flex-col justify-between">
+                <div>
+                  <div className="text-5xl mb-5 p-3 bg-[#115e4f] w-fit rounded-2xl border border-emerald-400/40 group-hover:scale-110 transition-transform duration-300">{item.ikon}</div>
+                  <h3 className="text-2xl font-black text-white mb-3 group-hover:text-amber-400 transition-colors">{item.judul}</h3>
+                  <p className="text-lg text-emerald-50 leading-relaxed font-normal">{item.desc}</p>
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
+      </section>
+
+      {/* SARANA & PRASARANA */}
+      <section className="max-w-7xl mx-auto px-6 py-12 w-full">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 flex items-center gap-3">
+            <span className="text-amber-400 text-4xl">🏫</span> Sarana & Prasarana
+          </h2>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { judul: "Lab Sains Canggih", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Lab+Sains" },
+            { judul: "Perpustakaan Referensi", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Perpustakaan" },
+            { judul: "Ruang Diskusi & Konseling", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Ruang+Konseling" },
+            { judul: "Masjid Kampus Utama", foto: "https://placehold.co/600x400/0d4738/fbbf24?text=Masjid+Kampus" }
+          ].map((sarpras, i) => (
+            <RevealOnScroll key={i} delay={(i+1) * 150}>
+              <div className="bg-[#0d4738] border-2 border-emerald-400/50 rounded-3xl overflow-hidden hover:-translate-y-2 hover:border-amber-400 transition-all duration-500 flex flex-col h-full group shadow-xl">
+                <div className="h-48 relative overflow-hidden">
+                  <img src={sarpras.foto} alt={sarpras.judul} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                </div>
+                <div className="p-6 text-center bg-[#0d4738] border-t border-emerald-400/30 flex-1 flex flex-col justify-center">
+                  <span className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-widest mb-1">Foto Fasilitas</span>
+                  <h4 className="text-lg sm:text-xl font-black text-white group-hover:text-amber-400 transition-colors">{sarpras.judul}</h4>
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
+      </section>
+
+      {/* BIAYA */}
+      <section className="max-w-4xl mx-auto px-6 py-12 w-full mb-12">
+        <RevealOnScroll delay={100}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-8 flex items-center gap-3 justify-center md:justify-start">
+            <span className="text-amber-400 text-4xl">💰</span> Estimasi Rincian Biaya SMA
+          </h2>
+        </RevealOnScroll>
+        <RevealOnScroll delay={200}>
+          <div className="bg-[#071E16]/90 backdrop-blur-md border border-emerald-700/50 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div className="space-y-6 relative z-10">
+              <div className="flex justify-between items-center border-b border-emerald-800/60 pb-5 hover:text-amber-400 transition-colors group cursor-default">
+                <span className="font-black text-xl sm:text-2xl block group-hover:translate-x-2 transition-transform text-white">Uang Pangkal / Gedung</span>
+                <span className="font-black text-amber-400 text-2xl sm:text-3xl">Rp 4.500.000</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-emerald-800/60 pb-5 hover:text-amber-400 transition-colors group cursor-default">
+                <span className="font-black text-xl sm:text-2xl block group-hover:translate-x-2 transition-transform text-white">Seragam (4 Stel)</span>
+                <span className="font-black text-amber-400 text-2xl sm:text-3xl">Rp 850.000</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-emerald-800/60 pb-5 hover:text-amber-400 transition-colors group cursor-default">
+                <span className="font-black text-xl sm:text-2xl block group-hover:translate-x-2 transition-transform text-white">SPP Bulanan</span>
+                <span className="font-black text-amber-400 text-2xl sm:text-3xl">Rp 350.000 <span className="text-base text-emerald-200/80 font-normal">/bulan</span></span>
+              </div>
+            </div>
+            <div className="mt-10 pt-8 border-t border-amber-500/30 text-center relative z-10">
+              <Link href="/pendaftaran/sma" className="inline-block px-10 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xl font-black shadow-lg shadow-amber-400/20 hover:-translate-y-1 transition-all duration-300">
+                Daftar SMA Al-Irsyad Sekarang ✨
+              </Link>
+            </div>
+          </div>
+        </RevealOnScroll>
+      </section>
+
     </div>
   );
 }
